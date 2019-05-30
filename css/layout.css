@@ -1,0 +1,34 @@
+/* border box */
+html, *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+/* font styling */
+.bold {
+  font-weight: bold;
+}
+
+/* title elements */
+.subtitle {
+  margin: 1.75em 0px 0.75em 0px;
+  border-bottom: var(--color-shade-medium) 1px solid;
+}
+
+/* position and width */
+.d-flex {
+  display: flex;
+}
+
+.stretch {
+  flex-grow: 1;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.p-rel {
+  position: relative;
+}

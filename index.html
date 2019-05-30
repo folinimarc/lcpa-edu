@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lcpa edu</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/stories.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/elements.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="css/misc.css">
+  </head>
+
+  <body ondragstart="return false;" ondrop="return false;">
+
+    <!-- STORY PANEL -->
+    <div id="storyPanel" class="w-100">
+      <div id="storyPreviousNavigationButton" class="storyNavigationButton" onclick="previousStory();"></div>
+      <div id="storyNextNavigationButton" class="storyNavigationButton" onclick="nextStory();"></div>
+      <div id="stories" value="0"></div>
+    </div>
+
+    <!-- MAIN PANEL -->
+    <div id="mainPanel" class="d-flex w-100">
+
+      <!-- LEFT PANEL (MENU) -->
+      <div id="leftPanel">
+
+          <!-- DROPDOWN BACKGROUND IMAGE -->
+          <p class="subtitle bold">Background</p>
+          <div id="dropdown-bg" class="dropdown">
+            <button class="btn-1"><span>Dropdown Button</span><span class='dropdown-arrow'>&#9660;</span></button>
+            <div class="dropdown-itemcontainer">
+            </div>
+          </div>
+
+          <!-- DROPDOWN RASTER -->
+          <p class="subtitle bold">Data raster</p>
+          <div class="d-flex">
+            <div id="dropdown-ra" class="dropdown stretch">
+              <button class="btn-1"><span>Dropdown Button</span><span class='dropdown-arrow'>&#9660;</span></button>
+              <div class="dropdown-itemcontainer">
+              </div>
+            </div>
+            <div id="opacity-container">
+              <img id="eye" src="data/eyeclose.png">
+              <input type="range" id="slider-opacity" class="slider" min="0" max="1" step="0.05">
+            </div>
+          </div>
+
+          <!-- ORIGIN BUTTON -->
+          <p class="subtitle bold">Set origin</p>
+          <button class="btn-1 btn-boxshadow">O</button>
+            
+      </div>
+
+      <!-- CENTER PANELS -->
+      <div id="centerPanel" class="stretch">
+
+        <!-- CENTER TOP PANEL (CANVAS) -->
+        <div id="centerTopPanel">
+        
+        </div>
+
+        <!-- CENTER BOTTOM PANEL (indicators) -->
+        <div id="centerBottomPanel">
+        
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL (legend) -->
+      <div id="rightPanel">
+        
+      </div>
+
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script type="text/javascript" src="js/story.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

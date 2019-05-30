@@ -1,0 +1,19 @@
+/* panels */
+#mainPanel,
+#storyPanel {
+    width: var(--width-total);
+}
+
+#leftPanel,
+#rightPanel {
+    width: var(--width-side-panel);
+    max-width: var(--maxwidth-side-panel);
+    height: var(--height-side-panel);
+    background-color: var(--color-shade-light);
+}
+
+#centerPanel {
+    width: var(--width-center-panel);
+    height: var(--height-center-panel);
+    background-color: var(--color-shade-light);
+}

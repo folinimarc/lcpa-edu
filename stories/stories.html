@@ -1,0 +1,329 @@
+<!-- ************** STORY 0 ************** -->
+<div id="story0" class="story" style="display: block;">
+	<h2 id="storyTitle0">Introduction</h2>
+	<h4>
+	Least Cost Path Analysis - An Overview
+	</h4>
+	<p>
+	Given a raster that defines the cost of traversing a cell, least-cost path analysis (LCPA) finds the least accumulated cost path from a source to a target cell. 
+	Alternatively, some applications such as the Distance Toolset of ArcGIS finds the least accumulated cost path from a source to all other cells. 
+	Costs in this context may reflect monetary values but also more abstract measures such as movement effort or travel time.
+	</p>
+
+	<p>
+	Common applications involve the planning of roads (!!ref) and transmission lines, as well as assessment of the connectivity of wildlife habitats (!!ref) or accessibility of medical services (!!ref). 
+	</p>
+	
+	<h4>
+	After completing this module, you should be able to…
+	</h4>
+	<ul>
+        <li>Explain the underlying concepts of LCPA using adequate terminology (e.g. cost raster, cost distance measures, normalized weighted mean, pareto-frontier).</li>
+        <li>Explain how properties of input data, such as raster cell size, influence the results of LCPA.</li>
+        <li>Explain how your conceptual choices, such as node-link cell representation or cost factor weights, influence the results of LCPA.</li>
+		<li>Explain the terms multi-objective optimization and pareto-optimal solutions in the context of LCPA.</li>
+		<li>Explain possible pitfalls, such as edge effects.</li>
+    </ul>
+</div>
+
+<!-- ************** STORY 1 ************** -->
+<div id="story1" class="story" style="display: none;">
+    <h2 id="storyTitle1">Table of content</h2>
+
+    <ul>
+        <li>Learning Goals</li>
+        <li>Key concepts of LCPA</li>
+        <li>Let’s build a road – Single objective optimization</li>
+    </ul>
+    
+	
+</div>
+
+<!-- ************** STORY 2 ************** -->
+<div id="story2" class="story" style="display: none;">
+    <h2 id="storyTitle2">Key concepts of LCPA</h2>
+    	
+	<h4>The following key concepts are required to conduct a LCPA:</h4>
+	
+    <ul>
+        <li>
+			<h4>Source raster</h4>
+			<p>
+			A source raster defines one or more source cells, from which the accumulated least cost paths to all other cells are calculated. 
+			To that end, the source cell defines an endpoint of the desired path, either the start or the destination. 
+			In case of multiple sources, only the accumulated least cost path to the closest source cell is retained.
+			</p>
+		</li>
+        <li>
+			<h4>Cost raster</h4>
+			<p>
+			A cost raster defines the impedance - i.e. how much effort it takes - to move laterally through each cell (from left to right or top to bottom and vice versa, but not diagonally). 
+			The term cost is hereafter used interchangeably with impedance. The total cost of each cell is often a function (e.g. the sum) of several different costs. 
+			For a road, that could include terrain slope and geology, but also socio-environmental costs such as proximity to recreation areas or wildlife reserves. 
+			Depending on the nature of these costs, normalization might be necessary, e.g. when combining construction costs in dollars with an ecological index that ranges from zero to one. 
+			To account for the relative importance of different costs, they can be assigned weights. 
+			To that end, the total cost of a cell might be considered the weighted sum of the normalized costs.
+			</p>
+		</li>
+		<li>
+			<h4>Node-link representation</h4>
+			<p>
+			The node-link representation defines the possible movements from one cell to its neighbors. 
+			A node represents the center of a cell and links connect a node to the nodes of adjacent cells. 
+			Because movement is only possible along links, the decision of which cells are adjacent to each other is crucial. 
+			A common node-link representation defines 8 neighbors for each cell (!!fig a) and is used in the ArcGIS Distance Toolset for example. 
+			It is also possible to extend this concept to 16 (!!fig b) or even 48 (!!fig c) links per node. 
+			Note, that every single node is connected in the same way to its neighbors. 
+			</p>
+			<img src="media/node_link.jpg" width="300px"/>
+		</li>
+		<li>
+			<h4>Cost distance measure</h4>
+			<p>
+			The cost distance measure defines how to calculate the cost of moving along a link from one cell to another based on the costs defined in the cost raster and the node-link representation. 
+			Given a link between two cells C1 and C2, a generalized approach might look as follows: 
+			First, multiply the costs raster entries of each cell the link passes through (including the start and end cells) by the percentage of the link length in that respective cell. 
+			Second, because the costs in the cost raster are defined for lateral movement, the calculated weights must be corrected by accounting for the deviations in x and y direction. 
+			This is, because moving through a cell diagonally is approximately 1.414 the distance compared to moving through it laterally. 
+			Third, the sum is then the total cost associated with moving from C1 to C2. 
+			In the case of two immediate lateral (top, bottom, left, right) neighboring cells, this simplifies to a simple average of the two costs. 
+			In the case of two immediate diagonal neighboring cells, this simplifies to averaging the costs with subsequent multiplication of 1.414.
+			</p>
+		</li>
+		<li>
+			<h4>Algorithm</h4>
+			<p>
+			Once the costs of all links between all cells and their neighbors have been calculated, Dijkstra’s algorithm is used to derive the accumulated least cost paths from the source cell to all other cells. 
+			In the most common implementations, such as the Distance Toolset of ArcGIS, the algorithm produces two distinct output datasets: 
+			First, a raster where each cell holds the total cost of its accumulated least cost path from the closest source cell. 
+			Second, a raster where each cell holds a numeric value that indicates the next cell to move to when following the accumulated least cost path towards the closest source. 
+			It is this second raster that allows for each cell in the raster a quick computation of the least cost path to the closest source cell.
+			</p>
+		</li>
+		
+		
+    </ul>
+	
+</div>
+
+<!-- ************** STORY 3 ************** -->
+<div id="story3" class="story" style="display: none;">
+    <h2 id="storyTitle3">Case study</h2>
+    	
+	<h4>
+	Let’s build a road – Case study introduction
+	</h4>
+    <p>
+	Imagine we want to build a road in a rural area in the <a target="_blank" href="https://map.geo.admin.ch/?topic=ech&lang=de&bgLayer=ch.swisstopo.swissimage&layers=ch.swisstopo.zeitreihen,ch.bfs.gebaeude_wohnungs_register,ch.bav.haltestellen-oev,ch.swisstopo.swisstlm3d-wanderwege&layers_visibility=false,false,false,false&layers_timestamp=18641231,,,&E=2716119.02&N=1222417.23&zoom=8">northern part</a> of Switzerland.
+	Use the dropdown menu “Background image” to display an aerial photo, a map or a hillshade of the area.
+    </p>
+    <p>
+        In <a href="#">part 1</a> we will explore how the least cost path between a source and a target cell depends on the cell size of the input rasters and different node-link representations. 
+		The cost raster is determined by construction cost only, implying that we optimize for the path with the lowest accumulated construction costs. 
+		Such an optimization towards a single objective is called <b>single objective optimization</b>.
+    </p>
+	<p>
+    In <a href="#">part 2</a> we will extend our analysis to consider also a second objective. 
+	Ecologically valuable areas should preferentially not be impacted by our road. 
+	Because the value of such areas can often not be transferred to monetary units, it is up to the decision maker to weight the importance of construction costs against the value of these ecologically valuable areas. 
+	Such an optimization towards multiple objectives is called <b>multi objective optimization</b>.
+    </p>
+	
+</div>
+
+<!-- ************** STORY 4 ************** -->
+<div id="story4" class="story" style="display: none;">
+    <h2 id="storyTitle4">Single objective optimization</h2>
+    
+	<h4>I) General workflow</h4>
+	
+	<p>
+	The overall objective is to minimize the construction costs. 
+	The following steps are required to conduct the LCPA:
+	</p>
+    <ol>
+        <li>
+		The cost raster needs to be calculated.
+        </li>
+		<li>
+		The node-link representation and cost-distance measures need to specified. 
+        </li>
+		<li>
+		Source and target cells need to be specified.
+        </li>
+		<li>
+		The algorithm to find the least cost path needs to be run.
+        </li>
+    </ol>
+	
+	<!-- GET TO KNOW -->
+	<br/>
+	<h4>II) Get to know the data</h4>
+    
+	<p>
+		<img src="media/task.png" width="30px"/>
+		<b>Hands-on: </b>
+	</p>
+	<p>
+		Inspect the different rasters by selecting them in the drop down “Data rasters”. 
+		Toggle the visibility by clicking the eye icon. 
+		Change the visibility by shortly hovering over the eye icon until a slider appears.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		The data raster “construction cost” represents the cost raster for this case study. 
+		What is the purpose of the cost raster in LCPA and how can the cell values be interpreted? 
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		In the cost raster, each cell reflects the total cost of traversing it in either horizontal or vertical direction. 
+		In the case of diagonal movement, the cell entry is multiplied by a factor 1.414 (the square root of 2) to account for the longer traversal distance compared to a vertical or horizontal movement. 
+		The same principle goes for all other directions with their respective correction factors. 
+		Alternatively, it is often more convenient to use costs that are normalized to a length unit, i.e. costs per meter. 
+		The conversion factor between costs per meter and costs per cell is the raster cell size.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		Try to come up with an idea, how the other data rasters “DEM”, “slope”, “slope cost” and “base cost” were used to aggregate the cost raster “construction cost”. 
+		Compare your thoughts with the answer.
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		For illustrative purposes, the calculation of the construction costs is extremely simplified: 
+		It consists only of a constant base cost and additional slope cost in steep terrain. 
+		The latter is calculated from a digital elevation model (DEM), a raster whose cells contain the elevation above sea level of the terrain. 
+		Deriving a slope raster from a DEM is a common GIS operation, whereby each cell indicates the slope gradient based on the elevation data of its 8 neighbors. 
+		An illustrative documentation of this operation can be found here (!!ref). 
+		Finally, a monetary value is assigned to each slope, which yields the slope cost raster.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		How could you extend this extremely simplified calculation of the construction cost raster to make it a little more realistic?
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		One could include the geological type of the terrain and/or the rock fraction of the soil. 
+	</p>
+	
+	<p>
+		<img src="media/task.png" width="30px"/>
+		<b>Hands-on: </b>
+	</p>
+	<p>
+		Set a source and a target cell by first clicking the corresponding buttons and then clicking on the map. 
+		A loading screen will appear while the calculations of the least cost path are performed. 
+		You can display the least cost paths for node-link representations with 4, 8, 24 and 48 neighbors by clicking the corresponding numbers in the “Adjacency & cellsize” section. 
+		The accumulated construction costs are shown below the map in the respective color. 
+		Replacing the source or target will automatically recalculate all least cost paths.
+	</p>
+	
+	<!-- NODE-LINK -->
+	<br/>
+	<h4>III) Impact of the node-link representation</h4>
+    
+	<p>
+		<img src="media/task.png" width="30px"/>
+		<b>Hands-on: </b>
+	</p>
+	<p>
+		Relocate the source and/or target a few times and compare the accumulated construction costs of the different node-link representations.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		Do construction costs generally increase or decrease from 4, 8, 24 to 48 neighbors? 
+		What might be the reason?
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		The construction costs decrease from 4 to 48 neighbors. 
+		Furthermore, construction costs are always the same or lower for a node-link representation with more neighbors compared to one with less neighbor. 
+		This is, because the case of 48 neighbors includes all movement possibilities of the case of 24 neighbors, which in turn includes all movement possibilities of 8 neighbors and so on. 
+		The more neighbors a node-link representation includes, the more possible links we give the model to choose from, i.e. we increase the solution space.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		What are the benefits in terms of cost savings when going from 4, 8, 24 to 48 neighbors? 
+		I.e. how do the savings in construction costs differ when comparing 4 to 8 neighbors, 8 to 24 neighbors and 24 to 48 neighbors?
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		Changing the node-link representation from 4 to 8 neighbors has generally the largest impact. 
+		Increasing it from 8 to 24 and 24 to 48 neighbors comes with comparably small additional reduction of construction costs.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		We saw that a solution with more neighbors is always at least equally good or better than solutions with less neighbors, as long as it extends movement possibilities while preserving the existing ones. 
+		Can you think of disadvantages when extending the node-link representation even further?
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		More links require increased computational time. 
+		Combined with the decreasing cost saving benefits, this trade-off might not be worth extending the node-link representation. 
+	</p>
+	
+	<p>
+		<img src="media/idea.png" width="30px"/>
+		<b>Conclusion: </b>
+	</p>
+	<p>
+		Even in this simple case study, differences in node-link representation may have a substantial impact on the solution. 
+		The more links are available for movement, the larger the solution space from which to pick the best solution. 
+		The benefit is most pronounced when increasing from 4 to 8 neighbors.
+	</p>
+	
+	<!-- CELLSIZE -->
+	<br/>
+	<h4>IV) Impact of raster cellsize</h4>
+    
+	<p>
+		<img src="media/task.png" width="30px"/>
+		<b>Hands-on: </b>
+	</p>
+	<p>
+		Relocate the source and/or target a few times and compare the accumulated construction costs for different raster cellsizes.
+	</p>
+	
+	<p>
+		<img src="media/question.png" width="30px"/>
+		<b>Question: </b>
+	</p>
+	<p>
+		When changing from a cellsize of 10m to 50m, do construction costs generally increase or decrease? 
+		What could be the reason?
+		[<a class="interactive" onclick="hideShowToggle(this);">show answer</a>]
+	</p>
+	<p style="display: none" class="answer">
+		Construction costs are generally a little higher for the 10m cellsize. 
+		Geospatial dataset are always an approximation of the reality and therefore never truly exact. 
+		In the case of a DEM, each cell approximates the elevation of the [ to be continued... ] 
+	</p>
+	
+	
+	
+	
+	
+</div>

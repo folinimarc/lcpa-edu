@@ -1,0 +1,110 @@
+#storyPanel {
+    height: var(--story-height);
+    position: relative;
+    overflow:hidden;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 60px;
+    padding-right: 60px;
+    border: solid 1px var(--color-shade-light);
+}
+
+#stories {
+  position: relative;
+  left: 0px;
+  top: 22px;
+  padding-top: 20px;
+  width: 100%;
+  height:100%;
+}
+
+.story {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    padding-left: 60px;
+    padding-right: 60px;
+    max-height: calc(100% - 40px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.storyNavigationButton {
+    position: absolute;
+    width: 50px;
+    height: 100%;
+    bottom: 0px;
+    background-color: white;
+    z-index: 3;
+    cursor: pointer;
+    background-size: 60%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.storyNavigationButton:hover {
+    background-color: var(--color-shade-light);
+}
+
+#storyPreviousNavigationButton {
+    left: 0px;
+    background-image: url("../data/doubleArrowHide.png");
+}
+#storyNextNavigationButton {
+    right: 0px;
+    background-image: url("../data/doubleArrowShow.png");
+}
+
+
+.storyTab {
+    position: relative;
+    float: left;
+    left: 0px;
+    margin-right: 5px;
+    top: 0px;
+    border: 1px solid var(--color-shade-light);
+    border-bottom-width: 0px;
+    z-index: 5;
+    font-size: 11pt;
+    padding-left: 5px;
+    padding-right: 15px;
+    padding-top: 2px;
+	padding-bottom: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: var(--color-shade-light);
+}
+
+.interactive {
+    font-style: normal;
+    color: var(--color-link);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.storyTab:hover {
+    background-color: var(--color-shade-light);
+    cursor: pointer;
+}
+
+.storyTabActive {
+    background-color: white;
+    height: 20px;
+}
+
+.storyTabActive:hover {
+    background-color: white;
+    height: 20px;
+    cursor: default;
+}
+
+.question {
+    font-style: normal;
+    -webkit-margin-after: 0.5em;
+}
+
+.answer {
+    font-style: italic;
+    background-color: var(--color-answer-background);
+    -webkit-margin-before: 0.5em;
+}
