@@ -21,8 +21,16 @@ html, *, *:before, *:after {
   display: flex;
 }
 
+.space-between {
+  justify-content: space-between;
+}
+
 .stretch {
   flex-grow: 1;
+}
+
+.align-children-vertically {
+  align-items: center;
 }
 
 .d-none {
@@ -31,4 +39,14 @@ html, *, *:before, *:after {
 
 .p-rel {
   position: relative;
+}
+
+/* sizes */
+.size-30px {
+  size: 30px;
+  width: 30px;
+}
+
+.w-100 {
+  width: 100%;
 }

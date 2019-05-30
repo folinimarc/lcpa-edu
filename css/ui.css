@@ -17,6 +17,16 @@
   box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.4);
 }
 
+/* inputs */
+.input-1 {
+  text-align: center;
+  color: Black;
+  background-color: var(--color-shade-medium);
+  border-style: none;
+  border-radius:3px;
+}
+
+
 /* dropdown */  
   .dropdown {
      position: relative;
@@ -60,6 +70,10 @@
     top: 6px;
   }
 
+  #dropdown-re {
+    width: 100px;  
+  }
+
   /* raster visibility slider */
 #opacity-container {
   position: relative;
@@ -67,8 +81,6 @@
   height: 30px;
   padding-left: 5px;
   padding-right: 5px;
-  display: flex;
-  align-items: center;
 }
 
 #eye {
@@ -87,4 +99,100 @@
   z-index: 1;
   border-radius: 0px 5px 5px 0px;
   cursor: pointer;
+}
+
+.slider {
+  background-color: var(--color-shade-light);
+}
+
+/* adjacency radio */
+.myCheckbox {
+  display: inline-block;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  position: relative;
+  background-color: var(--color-shade-light);
+  -webkit-transition: background-color .15s linear;
+  -moz-transition: background-color .15s linear;
+  -o-transition: background-color .15s linear;
+  transition: background-color .15s linear;
+  cursor: pointer;
+}
+
+.myCheckbox > div {
+  opacity: 0;
+  border-radius: 50%;
+  position: absolute;
+  vertical-align: middle;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  color: white;
+  line-height: 20px;
+  margin-left: -2px;
+  margin-top: -2px;
+  -webkit-transition: opacity .15s linear;
+  -moz-transition: opacity .15s linear;
+  -o-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+}
+
+.myCheckbox.check > div {
+  opacity: 1;
+}
+
+#check0 {
+  border: 2px solid var(--color-adja-4);
+}
+
+#check1 {
+  border: 2px solid var(--color-adja-8);
+}
+
+#check2 {
+  border: 2px solid var(--color-adja-24);
+}
+
+#check3 {
+  border: 2px solid var(--color-adja-48);
+}
+
+#check0.check {
+  background-color: var(--color-adja-4);
+}
+
+#check1.check {
+  background-color: var(--color-adja-8);
+}
+
+#check2.check {
+  background-color: var(--color-adja-24);
+}
+
+#check3.check {
+  background-color: var(--color-adja-48);
+}
+
+.checkLabel {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.checkDiv {
+  padding-bottom: 5px;
+}
+
+/* reclassification menus */
+#b_slope_remove_reclassify {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.reclass_item input {
+  width: 25%;
 }

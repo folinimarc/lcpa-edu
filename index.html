@@ -43,7 +43,7 @@
               <div class="dropdown-itemcontainer">
               </div>
             </div>
-            <div id="opacity-container">
+            <div id="opacity-container" class="d-flex space-between align-children-vertically">
               <img id="eye" src="data/eyeclose.png">
               <input type="range" id="slider-opacity" class="slider" min="0" max="1" step="0.05">
             </div>
@@ -51,7 +51,93 @@
 
           <!-- ORIGIN BUTTON -->
           <p class="subtitle bold">Set origin</p>
-          <button class="btn-1 btn-boxshadow">O</button>
+          <button id="setOrigin" class="btn-1 btn-boxshadow">O</button>
+
+          <!-- RADIO ADJACENCY -->
+          <p class="subtitle bold">Adjacency &amp; cellsize</p>
+          
+          <div class="d-flex space-between">
+            <div>
+                <div>
+                  <!-- 4 -->
+                  <div id="checkDiv0" class="checkDiv">
+                    <div id="check0" class="myCheckbox">
+                      <div>&#10004;</div>
+                    </div>
+                    <span class="checkLabel">4</span>
+                  </div>
+                </div>
+                <!-- 8 -->
+                <div id="checkDiv1" class="checkDiv">
+                  <div id="check1" class="myCheckbox">
+                    <div>&#10004;</div>
+                  </div>
+                  <span class="checkLabel">8</span>
+                </div>
+                <!-- 24 -->
+                <div id="checkDiv2" class="checkDiv">
+                  <div id="check2" class="myCheckbox">
+                    <div>&#10004;</div>
+                  </div>
+                  <span class="checkLabel">24</span>
+                </div>
+                <!-- 48 -->
+                <div id="checkDiv3" class="checkDiv">
+                  <div id="check3" class="myCheckbox">
+                    <div>&#10004;</div>
+                  </div>
+                  <span class="checkLabel">48</span>
+                </div>
+            </div>
+            <!-- adja visualization -->
+            <div>
+              <svg id="adjaVisualization" width="50px" height="50px"></svg>
+            </div>
+          </div>
+
+          <!-- DROPDOWN RESOLUTION -->
+          <br/>
+          <div class="d-flex space-between align-children-vertically">
+            <div>Cellsize:</div>
+            <div id="dropdown-re" class="dropdown">
+              <button class="btn-1"><span>10m</span><span class='dropdown-arrow'>&#9660;</span></button>
+              <div class="dropdown-itemcontainer">
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDER WEIGHTS -->
+          <p class="subtitle bold">Criteria weight</p>
+          <div class="d-flex space-between align-children-vertically">
+            <img src="data/C30x30.png" class="size-30px">
+            <input type="range" id="sliderWeight" class="slider stretch">
+            <img src="data/E30x30.png" class="size-30px">
+          </div>
+          
+          <!-- RECLASIFICATION SLOPE -->
+          <p class="subtitle bold">Reclassify slope</p>
+          <div>
+            <div class="d-flex space-between align-children-vertically">
+              <button id="b_slope_add_reclassify" type="button" class="add w-100 btn-1 btn-boxshadow">+</button>
+              <button id="b_slope_remove_reclassify" type="button" class="remove w-100 btn-1 btn-boxshadow">-</button>
+              <button id="b_slope_reclassify_reclassify" type="button" class="w-100 btn-1 btn-boxshadow">Reclassify</button>
+            </div>
+            <div class="first_item reclass_item d-flex align-children-vertically space-between">
+              <input type="text" class="input-1 reclass_lowerlimit" disabled value="-&infin;">
+              <p>to</p>
+              <input type="text" class="input-1 reclass_upperlimit" value="">
+              <p>=</p>
+              <input type="text" class="input-1 reclass_newvalue" value="">
+            </div>
+            %CONTENT%
+            <div class="last_item reclass_item d-flex align-children-vertically space-between">
+              <input type="text" class="input-1 reclass_lowerlimit" disabled value="">
+              <p>to</p>
+              <input type="text" class="input-1 reclass_upperlimit" disabled value="&infin;">
+              <p>=</p>
+              <input type="text" class="input-1 reclass_newvalue" value="">
+            </div>
+          </div>
             
       </div>
 

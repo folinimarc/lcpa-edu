@@ -10,6 +10,7 @@
     max-width: var(--maxwidth-side-panel);
     height: var(--height-side-panel);
     background-color: var(--color-shade-light);
+    padding: 1em;
 }
 
 #centerPanel {

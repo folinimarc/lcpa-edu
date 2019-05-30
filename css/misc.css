@@ -1,6 +1,6 @@
 /* in general no selection */
 html, *, *:before, *:after {
-    font: normal 13px Verdana, Arial, sans-serif;
+    font: normal 12px Verdana, Arial, sans-serif;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;

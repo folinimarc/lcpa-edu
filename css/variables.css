@@ -9,10 +9,15 @@
 
     --width-total: 100%;
 
-    --width-side-panel: 20%;
-    --maxwidth-side-panel: 240px;
-    --height-side-panel: 600px;
+    --width-side-panel: 25%;
+    --maxwidth-side-panel: 220px;
+    --height-side-panel: 900px;
 
-    --width-center-panel: 60%;
-    --height-center-panel: 600px;
+    --width-center-panel: 50%;
+    --height-center-panel: 900px;
+
+    --color-adja-4: gold;
+    --color-adja-8: darkorange;
+    --color-adja-24: red;
+    --color-adja-48: fuchsia;
   }
