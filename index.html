@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/elements.css">
     <link rel="stylesheet" href="css/ui.css">
     <link rel="stylesheet" href="css/misc.css">
+    <link rel="stylesheet" href="css/canvas.css">
   </head>
 
   <body ondragstart="return false;" ondrop="return false;">
@@ -35,17 +36,31 @@
             </div>
           </div>
 
-          <!-- DROPDOWN RASTER -->
-          <p class="subtitle bold">Data raster</p>
+          <!-- DROPDOWN INPUT RASTER -->
+          <p class="subtitle bold">Input raster</p>
           <div class="d-flex">
-            <div id="dropdown-ra" class="dropdown stretch">
+            <div id="dropdown-input" class="dropdown stretch">
               <button class="btn-1"><span>Dropdown Button</span><span class='dropdown-arrow'>&#9660;</span></button>
               <div class="dropdown-itemcontainer">
               </div>
             </div>
-            <div id="opacity-container" class="d-flex space-between align-children-vertically">
-              <img id="eye" src="data/eyeclose.png">
-              <input type="range" id="slider-opacity" class="slider" min="0" max="1" step="0.05">
+            <div id="opacity-input" class="opacity-container d-flex space-between align-children-vertically">
+              <img src="data/eyeclose.png">
+              <input type="range" class="slider" min="0" max="1" step="0.05">
+            </div>
+          </div>
+
+          <!-- DROPDOWN COST RASTER -->
+          <p class="subtitle bold">Cost raster</p>
+          <div class="d-flex">
+            <div id="dropdown-cost" class="dropdown stretch">
+              <button class="btn-1"><span>Dropdown Button</span><span class='dropdown-arrow'>&#9660;</span></button>
+              <div class="dropdown-itemcontainer">
+              </div>
+            </div>
+            <div id="opacity-cost" class="opacity-container d-flex space-between align-children-vertically">
+              <img src="data/eyeclose.png">
+              <input type="range" class="slider" min="0" max="1" step="0.05">
             </div>
           </div>
 
@@ -55,7 +70,6 @@
 
           <!-- RADIO ADJACENCY -->
           <p class="subtitle bold">Adjacency &amp; cellsize</p>
-          
           <div class="d-flex space-between">
             <div>
                 <div>
@@ -114,29 +128,20 @@
             <img src="data/E30x30.png" class="size-30px">
           </div>
           
-          <!-- RECLASIFICATION SLOPE -->
+          <!-- RECLASSIFICATION SLOPE -->
           <p class="subtitle bold">Reclassify slope</p>
-          <div>
+          <div id="slopeReclassContainer" class="reclass_container">
             <div class="d-flex space-between align-children-vertically">
-              <button id="b_slope_add_reclassify" type="button" class="add w-100 btn-1 btn-boxshadow">+</button>
-              <button id="b_slope_remove_reclassify" type="button" class="remove w-100 btn-1 btn-boxshadow">-</button>
-              <button id="b_slope_reclassify_reclassify" type="button" class="w-100 btn-1 btn-boxshadow">Reclassify</button>
-            </div>
-            <div class="first_item reclass_item d-flex align-children-vertically space-between">
-              <input type="text" class="input-1 reclass_lowerlimit" disabled value="-&infin;">
-              <p>to</p>
-              <input type="text" class="input-1 reclass_upperlimit" value="">
-              <p>=</p>
-              <input type="text" class="input-1 reclass_newvalue" value="">
+              <button id="b_slope_add_reclassify" type="button" class="add disablable btn-1 btn-boxshadow">+</button>
+              <button id="b_slope_remove_reclassify" type="button" class="remove disablable btn-1 btn-boxshadow">-</button>
             </div>
             %CONTENT%
-            <div class="last_item reclass_item d-flex align-children-vertically space-between">
-              <input type="text" class="input-1 reclass_lowerlimit" disabled value="">
-              <p>to</p>
-              <input type="text" class="input-1 reclass_upperlimit" disabled value="&infin;">
-              <p>=</p>
-              <input type="text" class="input-1 reclass_newvalue" value="">
-            </div>
+          </div>
+
+          <!-- RECLASSIFICATION ECOLOGICAL -->
+          <p class="subtitle bold">Reclassify ecological</p>
+          <div id="ecoReclassContainer" class="reclass_container">
+            %CONTENT%
           </div>
             
       </div>
@@ -146,7 +151,8 @@
 
         <!-- CENTER TOP PANEL (CANVAS) -->
         <div id="centerTopPanel">
-        
+          <canvas id="canvas-bg" class="canvas"></canvas>
+
         </div>
 
         <!-- CENTER BOTTOM PANEL (indicators) -->
@@ -167,6 +173,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script type="text/javascript" src="js/story.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/view_logic.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
